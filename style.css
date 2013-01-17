@@ -1,0 +1,72 @@
+﻿body {
+    background-color: #333333;
+    color: #ffffff;
+
+}
+h1 {
+    color: #00B5EF;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: underline;
+    font-family: Arial, sans-serif;
+}
+
+#divLinks {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+select {
+    width: 92%;
+    height: 24px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 90%;
+    margin-bottom: 10px;
+    height: 90px;
+    max-height: 200px;
+}
+
+label {
+    font-family: Arial, sans-serif;
+}
+
+input {
+    width: 90%;
+    margin-bottom: 10px;
+    height: 20px;
+}
+
+#chkEmailAssignee {
+    left: 10px;
+}
+
+#btnSubmit {
+    width: 100px !important;
+    margin-left: 10px;
+    height: 25px !important;
+}
+
+.divSection {
+    background-color: #00B5EF;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sectionHeader {
+    position: relative;
+    top: 8px;
+    color: #00B5EF;
+    font-size: 30px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
