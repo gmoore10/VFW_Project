@@ -15,7 +15,9 @@
         <ul id="errorList"></ul>
 
         <div id="divLinks">
-        <a href="#" id="linkClearData">Clear Stored Data</a> | <a href="#" id="linkDisplayData">Display Data</a>
+        <a href="#" id="linkClearData">Clear Stored Data</a>
+        <a href="#" id="linkDisplayData">Display Data</a>
+        <a href="additem.html" id="linkAddNew" style="display: none;">Add New To-Do</a>
             </div>
         <form action="#" method="post" id="toDoForm">
             <span id="spanYourName" class="sectionHeader">Your Name</span>
@@ -31,16 +33,7 @@
                 <ul>
                 	<li><label for="toDoName">To-Do Name </label><br /><input type="text" id="toDoName" /></li>
                     <li><label for="dtDue">Due Date</label><br /><input type="date" id="dtDue" /></li>
-                    <li id="select"><label for="assignedto">Assigned To: </label><br />
-                    
-                        <!--<select id="assinedTo">
-                    	<optgroup>
-                            <option value="Kim">Kim</option>
-                            <option value="Jim">Jim</option>
-                        </optgroup>
-                    </select>
-                        -->
-                    </li>
+                    <li id="select"><label for="assignedto">Assigned To: </label><br /></li>
                     <li><label for="rngPriority">Priority</label><br /><input type="range" id="rngPriority" /></li>
                     <li><label for="txtContent">Content</label><br /><textarea id="txtContent"></textarea></li>
                     <li><input type="checkbox" id="chkEmailAssignee" value="Yes" /><label for="chkEmailAssignee">Send Email to Task Receiver?</label></li>
