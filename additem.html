@@ -11,8 +11,11 @@
 	</head>
 	<body>
     	<h1>Assignable To-Do List</h1>
+
+        <ul id="errorList"></ul>
+
         <div id="divLinks">
-        <a href="#">Clear Stored Data</a> | <a href="#">Display Data</a>
+        <a href="#" id="linkClearData">Clear Stored Data</a> | <a href="#" id="linkDisplayData">Display Data</a>
             </div>
         <form action="" method="post">
             <span id="spanYourName" class="sectionHeader">Your Name</span>
@@ -28,13 +31,15 @@
                 <ul>
                 	<li><label for="todoName">To-Do Name </label><br /><input type="text" id="todoName" /></li>
                     <li><label for="dtDue">Due Date</label><br /><input type="date" id="dtDue" /></li>
-                    <li><label for="assignedto">Assigned To: </label><br />
-                    <select id="assinedto">
+                    <li id="select"><label for="assignedto">Assigned To: </label><br />
+                    
+                        <!--<select id="assinedTo">
                     	<optgroup>
                             <option value="Kim">Kim</option>
                             <option value="Jim">Jim</option>
                         </optgroup>
                     </select>
+                        -->
                     </li>
                     <li><label for="rngPriority">Priority</label><br /><input type="range" id="rngPrioity" /></li>
                     <li><label for="txtContent">Content</label><br /><textarea id="txtContent"></textarea></li>
