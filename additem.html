@@ -17,7 +17,7 @@
         <div id="divLinks">
         <a href="#" id="linkClearData">Clear Stored Data</a> | <a href="#" id="linkDisplayData">Display Data</a>
             </div>
-        <form action="" method="post">
+        <form action="#" method="post" id="toDoForm">
             <span id="spanYourName" class="sectionHeader">Your Name</span>
         	<div id="divYourName" class="divSection">
                 <ul>
@@ -29,7 +29,7 @@
             <span id="spanToDoContent" class="sectionHeader">To-Do Content</span>
             <div id="divToDoContent" class="divSection">
                 <ul>
-                	<li><label for="todoName">To-Do Name </label><br /><input type="text" id="todoName" /></li>
+                	<li><label for="toDoName">To-Do Name </label><br /><input type="text" id="toDoName" /></li>
                     <li><label for="dtDue">Due Date</label><br /><input type="date" id="dtDue" /></li>
                     <li id="select"><label for="assignedto">Assigned To: </label><br />
                     
@@ -41,12 +41,12 @@
                     </select>
                         -->
                     </li>
-                    <li><label for="rngPriority">Priority</label><br /><input type="range" id="rngPrioity" /></li>
+                    <li><label for="rngPriority">Priority</label><br /><input type="range" id="rngPriority" /></li>
                     <li><label for="txtContent">Content</label><br /><textarea id="txtContent"></textarea></li>
-                    <li><label for="chkEmailAssignee">Send Email to Task Receiver?</label><br /><input type="checkbox" id="chkEmailAssignee" /></li>
+                    <li><input type="checkbox" id="chkEmailAssignee" value="Yes" /><label for="chkEmailAssignee">Send Email to Task Receiver?</label></li>
                     <li><input type="hidden" value="external" /></li>
                 </ul>
-                <input type="submit" id="btnSubmit" />
+                <input type="submit" id="btnSubmit" value="Save To-Do" />
             </div>
         </form>
         <script src="main.js" type="text/javascript"></script>
