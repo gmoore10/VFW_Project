@@ -1,5 +1,7 @@
-﻿// Project 2
+// Project 2
 // Visual Frameworks
+// VFW 0113
+// By: Garrett Moore
 
 //Wait until the DOM is read.
 window.addEventListener("DOMContentLoaded", function () {
