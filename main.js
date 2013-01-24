@@ -1,4 +1,4 @@
-// Project 2
+// Project 3
 // Visual Frameworks
 // VFW 0113
 // By: Garrett Moore
@@ -101,6 +101,7 @@ window.addEventListener("DOMContentLoaded", function () {
         //Get number of local storage items and add list items to ul for each local storage item
         for (var i = 0, j = localStorage.length; i < j; i++) {
             var makeLi = document.createElement('li');
+            var linksLi = document.createElement('li');
             makeList.appendChild(makeLi);
             var key = localStorage.key(i);
             var value = localStorage.getItem(key);
@@ -115,8 +116,37 @@ window.addEventListener("DOMContentLoaded", function () {
                 makeSubList.appendChild(makeSubLi);
                 var todoSubText = todo[n][0] + " " + todo[n][1];
                 makeSubLi.innerHTML = todoSubText;
+                makeSubList.appendChild(linksLi);
             }
+            makeToDoLinks(localStorage.key(i), linksLi); //Edit and Delete Links will be created
         }
+    }
+
+    //Make Item Links
+    //TODO: Change Name of vars
+    //Create the edit and delete links for each stored item when displayed.
+    function makeToDoLinks(key, linksLi) {
+        //Add edit single item link
+        var editLink = document.createElement('a');
+        editLink.href = "#";
+        editLink.key = key;
+        var editText = "Edit To-Do";
+        //editLink.addEventListener("click", editToDo);
+        editLink.innerHTML = editText;
+        linksLi.appendChild(editLink);
+
+        //Add <br />
+        var br = document.createElement('br');
+        linksLi.appendChild(br);
+
+        //Delete Link
+        var deleteLink = document.createElement('a');
+        deleteLink.href = "#";
+        deleteLink.key = key;
+        var deleteText = "Delete To-Do";
+        //deleteLink.addEventListener("click", deleteToDo);
+        deleteLink.innerHTML = deleteText;
+        linksLi.appendChild(deleteLink);
     }
 
     function clearLocal() {
