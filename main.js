@@ -131,7 +131,7 @@ window.addEventListener("DOMContentLoaded", function () {
         editLink.href = "#";
         editLink.key = key;
         var editText = "Edit To-Do";
-        //editLink.addEventListener("click", editToDo);
+        editLink.addEventListener("click", editToDo);
         editLink.innerHTML = editText;
         linksLi.appendChild(editLink);
 
@@ -147,6 +147,29 @@ window.addEventListener("DOMContentLoaded", function () {
         //deleteLink.addEventListener("click", deleteToDo);
         deleteLink.innerHTML = deleteText;
         linksLi.appendChild(deleteLink);
+    }
+
+    function editToDo() {
+        //Get Data from localStorage
+        var value = localStorage.getItem(this.key);
+        var item = JSON.parse(value);
+
+        //Show form
+        toggleControls("off");
+
+        //Populate Form with current record from localStorage
+        //$('groups').value = item.group[1];
+        $('firstname').value = item.firstName[1];
+        $('lastname').value = item.lastName[1];
+        $('toDoName').value = item.toDoName[1];
+        $('dtDue').value = item.dtDue[1];
+        $('assignedTo').value = item.assignedTo[1];
+        $('rngPriority').value = item.priority[1];
+        $('txtContent').value = item.content[1];
+        if (item.sendEmail[1] == true) {
+            $('chkEmailAssignee').setAttribute("checked", "checked");
+        }
+        
     }
 
     function clearLocal() {
