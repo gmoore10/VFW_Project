@@ -169,7 +169,73 @@ window.addEventListener("DOMContentLoaded", function () {
         if (item.sendEmail[1] == true) {
             $('chkEmailAssignee').setAttribute("checked", "checked");
         }
+
+        //Remove the initial listener from the input 'save contact' button.
+
+        save.removeEventListener("click", storeToDo);
+        //Change Submit Button Value to Edit Button
+        $('btnSubmit').value = "Edit To-Do";
+        var editSubmit = $('btnSubmit');
+        //Save the key value established in this function as a property of the editSubmit event
+        //so we can use that value when we save the data we edited.
+        editSubmit.addEventListener("click", validate);
+        editSubmit.key = this.key;
         
+    }
+
+    function validate(a) {
+        //vars
+        var getFirstName = $('firstname');
+        var getLastName = $('lastname');
+        var getToDoName = $('toDoName');
+        var getAssignedTo = $('assignedTo');
+
+        //Kill Old Errors
+        errorList.innerHTML = "";
+        getFirstName.style.border = "0px solid red";
+        getLastName.style.border = "0px solid red";
+        getAssignedTo.style.border = "0px solid red";
+        getToDoName.style.border = "0px solid red";
+        
+        //Error Messages
+        var messageArray = [];
+
+        //FirstName Validation
+        if (getFirstName.value == "") {
+            var firstNameError = "First Name cannot be blank";
+            getFirstName.style.border = "1px solid red";
+            messageArray.push(firstNameError);
+        }
+
+        if (getLastName.value == "") {
+            var lastNameError = "Last Name cannot be blank";
+            getLastName.style.border = "1px solid red";
+            messageArray.push(lastNameError);
+        }
+
+        //Assigned To Validation
+        if (getAssignedTo.value == "--Choose Staff Member--") {
+            var assignedToError = "You must assigned this to-do to someone.";
+            getAssignedTo.style.border = "1px solid red";
+            messageArray.push(assignedToError);
+        }
+
+        if (getToDoName.value == "") {
+            var toDoNameError = "To-do Name cannot be blank";
+            getToDoName.style.border = "1px solid red";
+            messageArray.push(toDoNameError);
+        }
+        
+        //Dispay Errors, if any
+        if (messageArray.length >= 1) {
+            for (var i = 0, j = messageArray.length; i < j; i++) {
+                var txt = document.createElement('li');
+                txt.innerHTML = messageArray[i];
+                errorList.appendChild(txt);
+            }
+        }
+        a.preventDefault();
+        return false;
     }
 
     function clearLocal() {
@@ -186,6 +252,7 @@ window.addEventListener("DOMContentLoaded", function () {
     //Set up list of people that we will be assigning to-do's to.
     var toDoAssignees = ["--Choose Staff Member--", "Jim", "Kim"];
     createAssigneeList();
+    errorList = $('errorList');
 
     //Set Link & Submit Click Events
     var displayLink = $('linkDisplayData');
@@ -193,7 +260,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var clearLink = $('linkClearData');
     clearLink.addEventListener("click", clearLocal);
     var save = $('btnSubmit');
-    save.addEventListener("click", storeToDo);
+    save.addEventListener("click", validate);
 
      
 
