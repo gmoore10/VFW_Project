@@ -149,7 +149,7 @@ window.addEventListener("DOMContentLoaded", function () {
         deleteAnchor.key = key;
         var deleteAnchorText = "Delete To-Do";
         deleteAnchor.addEventListener("click", deleteToDo);
-        deleteAnchor.innerHTML = deleteText;
+        deleteAnchor.innerHTML = deleteAnchorText;
         linksLi.appendChild(deleteAnchor);
     }
 
