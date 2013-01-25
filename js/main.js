@@ -8,14 +8,14 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
     //getElementById Function
-    function $(x) {
+    function $$(x) {
         var element = document.getElementById(x);
         return element;
     }
 
     //Create select field element and populate with options
     function createAssigneeList() {
-        var selectListItem = $('select');
+        var selectListItem = $$('select');
 
         var makeSelect = document.createElement('select');
         makeSelect.setAttribute("id", "assignedTo");
@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 
     function getCheckboxValue() {
-        if ($('chkEmailAssignee').checked) {
+        if ($$('chkEmailAssignee').checked) {
             chkEmailValue = true;
         }
         else {
@@ -39,21 +39,21 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 
     //Function to adjust links that are visible based on which page we are viewing
-    function toggleControls(n) {
+    function toggleDivs(n) {
         switch (n) {
             case "on":
-                $('toDoForm').style.display = "none";
-                $('linkClearData').style.display = "inline";
-                $('linkDisplayData').style.display = "none";
-                $('linkAddNew').style.display = "inline";
+                $$('toDoForm').style.display = "none";
+                $$('linkClearData').style.display = "inline";
+                $$('linkDisplayData').style.display = "none";
+                $$('linkAddNew').style.display = "inline";
                 break;
 
             case "off":
-                $('toDoForm').style.display = "block";
-                $('linkClearData').style.display = "inline";
-                $('linkDisplayData').style.display = "inline";
-                $('linkAddNew').style.display = "none";
-                $('items').style.display = "none";
+                $$('toDoForm').style.display = "block";
+                $$('linkClearData').style.display = "inline";
+                $$('linkDisplayData').style.display = "inline";
+                $$('linkAddNew').style.display = "none";
+                $$('items').style.display = "none";
                 break;
 
             default:
@@ -61,8 +61,12 @@ window.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function storeToDo() {
-        var id = Math.floor(Math.random() * 100000001);
+    function storeToDo(key) {
+        if (!key) {
+            var id = Math.floor(Math.random() * 100000001);
+        } else {
+            id = key;
+        }
 
         //gather up all our form field values and store in an object.
         //Object properties contain array with the form label and input value.
@@ -70,14 +74,14 @@ window.addEventListener("DOMContentLoaded", function () {
         getCheckboxValue();
 
         var item = {};
-        item.firstName = ["First Name", $('firstname').value];
-        item.lastName = ["Last Name", $('lastname').value];
-        item.toDoName = ["To-Do Name", $('toDoName').value];
-        item.dtDue = ["Due Date", $('dtDue').value];
-        item.assignedTo = ["Assigned To", $('assignedTo').value];
-        item.priority = ["Priority", $('rngPriority').value];
+        item.firstName = ["First Name", $$('firstname').value];
+        item.lastName = ["Last Name", $$('lastname').value];
+        item.toDoName = ["To-Do Name", $$('toDoName').value];
+        item.dtDue = ["Due Date", $$('dtDue').value];
+        item.assignedTo = ["Assigned To", $$('assignedTo').value];
+        item.priority = ["Priority", $$('rngPriority').value];
         item.sendEmail = ["Send Email to Task Receiver?", chkEmailValue];
-        item.content = ["Content", $('txtContent').value];
+        item.content = ["Content", $$('txtContent').value];
 
         //Save data into Local Storage: Use Stringify to convert our object to a string.
         localStorage.setItem(id, JSON.stringify(item));
@@ -85,7 +89,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 
     function getToDos() {
-        toggleControls("on");
+        toggleDivs("on");
         if (localStorage.length === 0) {
             alert("There is no data in local storage.");
         }
@@ -96,7 +100,7 @@ window.addEventListener("DOMContentLoaded", function () {
         var makeList = document.createElement('ul');
         makeDiv.appendChild(makeList);
         document.body.appendChild(makeDiv);
-        $('items').style.display = "block";
+        $$('items').style.display = "block";
 
         //Get number of local storage items and add list items to ul for each local storage item
         for (var i = 0, j = localStorage.length; i < j; i++) {
@@ -127,55 +131,65 @@ window.addEventListener("DOMContentLoaded", function () {
     //Create the edit and delete links for each stored item when displayed.
     function makeToDoLinks(key, linksLi) {
         //Add edit single item link
-        var editLink = document.createElement('a');
-        editLink.href = "#";
-        editLink.key = key;
-        var editText = "Edit To-Do";
-        editLink.addEventListener("click", editToDo);
-        editLink.innerHTML = editText;
-        linksLi.appendChild(editLink);
+        var editAnchor = document.createElement('a');
+        editAnchor.href = "#";
+        editAnchor.key = key;
+        var editAnchorText = "Edit To-Do";
+        editAnchor.addEventListener("click", editToDo);
+        editAnchor.innerHTML = editAnchorText;
+        linksLi.appendChild(editAnchor);
 
         //Add <br />
         var br = document.createElement('br');
         linksLi.appendChild(br);
 
         //Delete Link
-        var deleteLink = document.createElement('a');
-        deleteLink.href = "#";
-        deleteLink.key = key;
-        var deleteText = "Delete To-Do";
-        //deleteLink.addEventListener("click", deleteToDo);
-        deleteLink.innerHTML = deleteText;
-        linksLi.appendChild(deleteLink);
+        var deleteAnchor = document.createElement('a');
+        deleteAnchor.href = "#";
+        deleteAnchor.key = key;
+        var deleteAnchorText = "Delete To-Do";
+        deleteAnchor.addEventListener("click", deleteToDo);
+        deleteAnchor.innerHTML = deleteText;
+        linksLi.appendChild(deleteAnchor);
+    }
+
+    function deleteToDo() {
+        var confirmPopup = confirm("Are you sure you want to delete this to-do?");
+        if (confirmPopup) {
+            localStorage.removeItem(this.key);
+            window.location.reload();
+        } else {
+            alert("No changes were made");
+        }
     }
 
     function editToDo() {
         //Get Data from localStorage
-        var value = localStorage.getItem(this.key);
-        var item = JSON.parse(value);
+        var localRecord = localStorage.getItem(this.key);
+        var localItem = JSON.parse(localRecord);
 
         //Show form
-        toggleControls("off");
+        toggleDivs("off");
 
         //Populate Form with current record from localStorage
-        //$('groups').value = item.group[1];
-        $('firstname').value = item.firstName[1];
-        $('lastname').value = item.lastName[1];
-        $('toDoName').value = item.toDoName[1];
-        $('dtDue').value = item.dtDue[1];
-        $('assignedTo').value = item.assignedTo[1];
-        $('rngPriority').value = item.priority[1];
-        $('txtContent').value = item.content[1];
-        if (item.sendEmail[1] == true) {
-            $('chkEmailAssignee').setAttribute("checked", "checked");
+        //$$('groups').value = item.group[1];
+        $$('firstname').value = localItem.firstName[1];
+        $$('lastname').value = localItem.lastName[1];
+        $$('toDoName').value = localItem.toDoName[1];
+        $$('dtDue').value = localItem.dtDue[1];
+        $$('assignedTo').value = localItem.assignedTo[1];
+        $$('rngPriority').value = localItem.priority[1];
+        $$('txtContent').value = localItem.content[1];
+        if (localItem.sendEmail[1] == true) {
+            $$('chkEmailAssignee').setAttribute("checked", "checked");
         }
 
         //Remove the initial listener from the input 'save contact' button.
 
         save.removeEventListener("click", storeToDo);
         //Change Submit Button Value to Edit Button
-        $('btnSubmit').value = "Edit To-Do";
-        var editSubmit = $('btnSubmit');
+        $$('btnSubmit').value = "Edit To-Do";
+        var editSubmit = $$('btnSubmit');
         //Save the key value established in this function as a property of the editSubmit event
         //so we can use that value when we save the data we edited.
         editSubmit.addEventListener("click", validate);
@@ -185,10 +199,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
     function validate(a) {
         //vars
-        var getFirstName = $('firstname');
-        var getLastName = $('lastname');
-        var getToDoName = $('toDoName');
-        var getAssignedTo = $('assignedTo');
+        var getFirstName = $$('firstname');
+        var getLastName = $$('lastname');
+        var getToDoName = $$('toDoName');
+        var getAssignedTo = $$('assignedTo');
 
         //Kill Old Errors
         errorList.innerHTML = "";
@@ -233,9 +247,12 @@ window.addEventListener("DOMContentLoaded", function () {
                 txt.innerHTML = messageArray[i];
                 errorList.appendChild(txt);
             }
+            a.preventDefault();
+            return false;
+        } else {
+            //Store Data
+            storeToDo(this.key);
         }
-        a.preventDefault();
-        return false;
     }
 
     function clearLocal() {
@@ -252,16 +269,13 @@ window.addEventListener("DOMContentLoaded", function () {
     //Set up list of people that we will be assigning to-do's to.
     var toDoAssignees = ["--Choose Staff Member--", "Jim", "Kim"];
     createAssigneeList();
-    errorList = $('errorList');
+    errorList = $$('errorList');
 
     //Set Link & Submit Click Events
-    var displayLink = $('linkDisplayData');
+    var displayLink = $$('linkDisplayData');
     displayLink.addEventListener("click", getToDos);
-    var clearLink = $('linkClearData');
+    var clearLink = $$('linkClearData');
     clearLink.addEventListener("click", clearLocal);
-    var save = $('btnSubmit');
+    var save = $$('btnSubmit');
     save.addEventListener("click", validate);
-
-     
-
 });
