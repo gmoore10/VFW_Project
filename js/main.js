@@ -116,6 +116,8 @@ window.addEventListener("DOMContentLoaded", function () {
             var makeSubList = document.createElement('ul');
             makeLi.appendChild(makeSubList);
 
+            getAssignedToImage(todo.assignedTo[1], makeSubList);
+
             for (var n in todo) {
                 var makeSubLi = document.createElement('li');
                 makeSubList.appendChild(makeSubLi);
@@ -125,6 +127,14 @@ window.addEventListener("DOMContentLoaded", function () {
             }
             makeToDoLinks(localStorage.key(i), linksLi); //Edit and Delete Links will be created
         }
+    }
+
+    function getAssignedToImage(assignedName, makeSubList) {
+        var imgLi = document.createElement('li');
+        makeSubList.appendChild(imgLi);
+        var newImage = document.createElement('img');
+        var imgSrc = newImage.setAttribute("src", "img/" + assignedName + ".png");
+        imgLi.appendChild(newImage);
     }
 
     function autoPopulateData() {
