@@ -91,7 +91,8 @@ window.addEventListener("DOMContentLoaded", function () {
     function getToDos() {
         toggleDivs("on");
         if (localStorage.length === 0) {
-            alert("There is no data in local storage.");
+            alert("There is no data in local storage. Test record were added.");
+            autoPopulateData();
         }
         //Write data from Local Storage to the browser.
         var makeDiv = document.createElement('div');
@@ -123,6 +124,14 @@ window.addEventListener("DOMContentLoaded", function () {
                 makeSubList.appendChild(linksLi);
             }
             makeToDoLinks(localStorage.key(i), linksLi); //Edit and Delete Links will be created
+        }
+    }
+
+    function autoPopulateData() {
+        //Populate to-do records from JSON file it localStorage is empty.
+        for (var n in json) {
+            var id = Math.floor(Math.random() * 100000001);
+            localStorage.setItem(id, JSON.stringify(json[n]));
         }
     }
 
